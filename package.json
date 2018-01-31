@@ -1,0 +1,8 @@
+{
+  "name": "xavier-class-platform",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/TheOdd/xavier-class-platform",
+  "author": "TheOdd",
+  "license": "MIT"
+}
