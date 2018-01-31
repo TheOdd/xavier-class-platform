@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# Output dev file
+build/app.bundle.js
