@@ -2,6 +2,10 @@
   "name": "xavier-class-platform",
   "version": "1.0.0",
   "main": "app.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack-dev-server --content-base build/ --config webpack.dev.js"
+  },
   "repository": "https://github.com/TheOdd/xavier-class-platform",
   "author": "TheOdd",
   "license": "MIT",
