@@ -5,20 +5,22 @@ import Main from '../components/Main'
 import RenderedPreview from '../components/RenderedPreview'
 import Editor from '../components/Editor'
 
-const AppContainer = ({ code, dispatch }) => (
+const AppContainer = ({ flipSwitch, code, dispatch }) => (
     <div>
-        <Main code={code} />
-        <Editor dispatch={dispatch} code={code}/>
-        <RenderedPreview />
+        <Main />
+        <Editor dispatch={dispatch} />
+        <RenderedPreview code={code} flipSwitch={flipSwitch} />
     </div>
 )
 
 AppContainer.propTypes = {
-    code: PropTypes.string
+    code: PropTypes.string,
+    flipSwitch: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
-    code: state.code
+    code: state.code,
+    flipSwitch: state.flipSwitch
 })
 
 const mapDispatchToProps = dispatch => ({

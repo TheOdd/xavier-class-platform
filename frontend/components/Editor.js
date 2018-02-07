@@ -10,7 +10,7 @@ export default class Editor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: props.code,
+            value: '',
             theme: 'monokai',
             mode: 'javascript',
             enableBasicAutocompletion: false,
@@ -20,8 +20,22 @@ export default class Editor extends Component {
             showPrintMargin: false,
             highlightActiveLine: true,
             enableSnippets: false,
-            showLineNumbers: true
+            showLineNumbers: true,
+            liveReload: false
         }
+    }
+
+    toggleLiveReload() {
+        this.setState({
+            liveReload: !this.state.liveReload
+        })
+    }
+
+    updatePreview() {
+        this.props.dispatch({
+            code: this.state.value,
+            type: 'UPDATE_CODE'
+        })
     }
 
     onLoad() {
@@ -29,10 +43,12 @@ export default class Editor extends Component {
     }
 
     onChange(newValue) {
-        this.props.dispatch({
-            code: newValue,
-            type: 'UPDATE_CODE'
+        this.setState({
+            value: newValue
         })
+        if (this.state.liveReload) {
+            this.updatePreview()
+        }
     }
 
     onSelectionChange(newValue, event) {
@@ -73,27 +89,32 @@ export default class Editor extends Component {
 
     render() {
         return (
-            <AceEditor
-              mode={this.state.mode}
-              theme={this.state.theme}
-              name="mainEditor"
-              onLoad={this.onLoad}
-              onChange={newValue => this.onChange(newValue)}
-              onSelectionChange={() => this.onSelectionChange}
-              onCursorChange={() => this.onCursorChange}
-              onValidate={() => this.onValidate}
-              value={this.props.code}
-              fontSize={this.state.fontSize}
-              showPrintMargin={this.state.showPrintMargin}
-              showGutter={this.state.showGutter}
-              highlightActiveLine={this.state.highlightActiveLine}
-              setOptions={{
-                enableBasicAutocompletion: this.state.enableBasicAutocompletion,
-                enableLiveAutocompletion: this.state.enableLiveAutocompletion,
-                enableSnippets: this.state.enableSnippets,
-                showLineNumbers: this.state.showLineNumbers,
-                tabSize: 4,
-            }}/>
+            <div>
+                <AceEditor
+                  mode={this.state.mode}
+                  theme={this.state.theme}
+                  name="mainEditor"
+                  onLoad={this.onLoad}
+                  onChange={newValue => this.onChange(newValue)}
+                  onSelectionChange={() => this.onSelectionChange}
+                  onCursorChange={() => this.onCursorChange}
+                  onValidate={() => this.onValidate}
+                  value={this.state.value}
+                  fontSize={this.state.fontSize}
+                  showPrintMargin={this.state.showPrintMargin}
+                  showGutter={this.state.showGutter}
+                  highlightActiveLine={this.state.highlightActiveLine}
+                  setOptions={{
+                    enableBasicAutocompletion: this.state.enableBasicAutocompletion,
+                    enableLiveAutocompletion: this.state.enableLiveAutocompletion,
+                    enableSnippets: this.state.enableSnippets,
+                    showLineNumbers: this.state.showLineNumbers,
+                    tabSize: 4,
+                }}/>
+                <button onClick={() => this.updatePreview()}>Run script</button>
+                <button onClick={() => this.toggleLiveReload()}>Toggle Live Reload</button>
+                <h5>Live Reloading: {this.state.liveReload.toString()}</h5>
+            </div>
         )
     }
 }

@@ -7,7 +7,7 @@ export default class Main extends Component {
 
     render() {
         return (
-            <h1>{this.props.code}</h1>
+            <h1>Placeholder Text</h1>
         )
     }
 }
